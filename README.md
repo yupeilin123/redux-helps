@@ -2,7 +2,7 @@ English | [简历中文](./README.zh-CN.md)
 
 # redux-helps
 
-`redux-helps` is a set of methods. In the case of `redux` , can simplify the `reduce` aggregation of `redux` , or in case of `redux-saga` , it can also simplify the  aggregation of `redux-saga` 's `sagas` .
+`redux-helps` is a set of methods. In the case of `redux` , can simplify the `reducers` aggregation of `redux` , or in case of `redux-saga` , it can also simplify the  aggregation of `redux-saga` 's `sagas` .
 
 ## Getting started
 
@@ -15,7 +15,7 @@ npm install redux-helps --save
 
 **transformReduces**
 
-The method `transformReduces` is used to convert `redux` 's `reduces` .
+The method `transformReduces` is used to convert `redux` 's `reducers` .
 
 First way: use the `require.context()` method of `webpack` .
 

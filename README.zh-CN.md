@@ -2,7 +2,7 @@
 
 # redux-helps
 
-`redux-helps` 是一个工具方法集，在使用 `redux` 的情况下，可以简化 `redux` 的 `reduces` 聚合，或者在使用 `redux-saga` 的情况下，可以简化 `redux-saga` 的 `sagas` 的聚合。
+`redux-helps` 是一个工具方法集，在使用 `redux` 的情况下，可以简化 `redux` 的 `reducers` 聚合，或者在使用 `redux-saga` 的情况下，可以简化 `redux-saga` 的 `sagas` 的聚合。
 
 ## 开始
 
@@ -15,7 +15,7 @@ npm install redux-helps --save
 
 **transformReduces**
 
-方法 `transformReduces` 用来转化 `redux` 的 `reduces` 。
+方法 `transformReduces` 用来转化 `redux` 的 `reducers` 。
 
 第一种方式: 使用 `webpack` 的 `require.context()` 方法。
 
