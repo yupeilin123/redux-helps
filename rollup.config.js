@@ -9,13 +9,13 @@ const config = {
 
 if (env === 'es' || env === 'cjs') {
   config.output = { format: env, indent: false };
-  config.external = ['redux-saga/effects'];
+  config.external = id => /redux-saga/.test(id) || /@babel\/runtime/.test(id);
   config.plugins.push(
     babel({
       exclude: 'node_modules/**',
       runtimeHelpers: true,
     })
-  )
+  );
 }
 
 if (env === 'development' || env === 'production') {
@@ -23,8 +23,15 @@ if (env === 'development' || env === 'production') {
     format: 'umd',
     name: 'redux-helper',
     indent: false,
+    globals: {
+      '@babel/runtime/helpers/typeof': '_typeof',
+      '@babel/runtime/helpers/objectSpread': '_objectSpread',
+      '@babel/runtime/helpers/objectWithoutProperties': '_objectWithoutProperties',
+      '@babel/runtime/regenerator': '_regeneratorRuntime',
+      'redux-saga/effects': 'effects'
+    }
   };
-  config.external = ['redux-saga/effects'];
+  config.external = id => /redux-saga/.test(id) || /@babel\/runtime/.test(id);
   config.plugins.push(
     babel({
       exclude: 'node_modules/**',

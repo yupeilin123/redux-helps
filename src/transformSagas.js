@@ -1,4 +1,5 @@
 import { takeEvery } from 'redux-saga/effects';
+import checkNamespace from './utils/checkNamespace';
 
 export default function transformSagas(rootSaga) {
   const sagas = {};
@@ -8,6 +9,9 @@ export default function transformSagas(rootSaga) {
       if (rootSaga[i].default) {
         if (Object.prototype.hasOwnProperty.call(rootSaga[i].default, 'namespace')) {
           const { namespace, ...handles } = rootSaga[i].default;
+          if (!checkNamespace(namespace)) {
+            throw new Error('namespace\'s type must be a \'String\'');
+          }
           Object.keys(handles).forEach(fname => {
             sagas[`${namespace}/${fname}`] = handles[fname];
           });
@@ -24,6 +28,9 @@ export default function transformSagas(rootSaga) {
       const subSaga = rootSaga[type];
       if (Object.prototype.hasOwnProperty.call(subSaga, 'namespace')) {
         const { namespace, ...handles } = subSaga;
+        if (!checkNamespace(namespace)) {
+          throw new Error('namespace\'s type must be a \'String\'');
+        }
         Object.keys(handles).forEach(fname => {
           sagas[`${namespace}/${fname}`] = handles[fname];
         });
@@ -36,9 +43,7 @@ export default function transformSagas(rootSaga) {
   }
   return function* everySagas() {
     for (const type in sagas) {
-      if (sagas[type]) {
-        yield takeEvery(type, sagas[type]);
-      }
+      yield takeEvery(type, sagas[type]);
     }
   };
 }

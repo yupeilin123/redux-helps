@@ -1,1 +1,1 @@
-console.log('@redux/helper welcome you');
+console.log('redux-helps welcome you');

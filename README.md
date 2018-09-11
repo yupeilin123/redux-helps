@@ -13,6 +13,8 @@ npm install redux-helps --save
 
 ### How to use
 
+Now provide the single file `transform` methods,`transformReduce` 和 `transformSaga`。You can view `examples` and `test` in detail.
+
 **transformReduces**
 
 The method `transformReduces` is used to convert `redux` 's `reducers` .
