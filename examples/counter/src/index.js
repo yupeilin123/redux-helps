@@ -4,14 +4,14 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import Counter from './Components/Counter.js';
-import rootReduces from './Reduces';
+import rootReducers from './Reducers';
 import rootSagas from './Sagas';
-import { transformReduce, transformSaga } from 'redux-helps'
+import { transformReducer, transformSaga } from 'redux-helps'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(transformReduce(rootReduces), applyMiddleware(sagaMiddleware));
+const store = createStore(transformReducer(rootReducers), applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(transformSaga(rootSagas));
 
 function App() {

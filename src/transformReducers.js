@@ -4,14 +4,14 @@ const randomString = () => Math.random().toString(36).substring(7).split('').joi
 
 const staticNamespace = `reduxHelps@0.1.0.${randomString()}`;
 
-export default function transformReduces(rootReduce) {
-  const reduces = {};
-  if (Array.isArray(rootReduce)) {
-    const len = rootReduce.length;
+export default function transformReducers(rootReducer) {
+  const reducers = {};
+  if (Array.isArray(rootReducer)) {
+    const len = rootReducer.length;
     for (let i = 0; i < len; i += 1) {
-      if (rootReduce[i].default) {
-        if (Object.prototype.hasOwnProperty.call(rootReduce[i].default, 'namespace')) {
-          const { namespace, state, ...handles } = rootReduce[i].default;
+      if (rootReducer[i].default) {
+        if (Object.prototype.hasOwnProperty.call(rootReducer[i].default, 'namespace')) {
+          const { namespace, state, ...handles } = rootReducer[i].default;
           if (!checkNamespace(namespace)) {
             throw new Error('namespace\'s type must be a \'String\'');
           }
@@ -19,7 +19,7 @@ export default function transformReduces(rootReduce) {
           if (plainState && !checkState(plainState)) {
             plainState = {};
           }
-          reduces[namespace] = (defaultState = { ...plainState }, action) => {
+          reducers[namespace] = (defaultState = { ...plainState }, action) => {
             if (action.type === 'setState') {
               return { ...defaultState, ...action.payload };
             }
@@ -32,8 +32,8 @@ export default function transformReduces(rootReduce) {
       }
     }
   } else {
-    Object.keys(rootReduce).forEach(type => {
-      const { namespace, state, ...handles } = rootReduce[type];
+    Object.keys(rootReducer).forEach(type => {
+      const { namespace, state, ...handles } = rootReducer[type];
       let plainState = state;
       if (plainState && !checkState(plainState)) {
         plainState = {};
@@ -42,7 +42,7 @@ export default function transformReduces(rootReduce) {
         if (!checkNamespace(namespace)) {
           throw new Error('namespace\'s type must be a \'String\'');
         }
-        reduces[namespace] = (defaultState = { ...plainState }, action) => {
+        reducers[namespace] = (defaultState = { ...plainState }, action) => {
           if (action.type === 'setState') {
             return { ...defaultState, ...action.payload };
           }
@@ -52,7 +52,7 @@ export default function transformReduces(rootReduce) {
           return defaultState;
         };
       } else {
-        reduces[type] = (defaultState = { ...plainState }, action) => {
+        reducers[type] = (defaultState = { ...plainState }, action) => {
           if (action.type === 'setState') {
             return { ...defaultState, ...action.payload };
           }
@@ -63,11 +63,11 @@ export default function transformReduces(rootReduce) {
         };
       }
     });
-    if (Object.keys(reduces).length === 0) {
-      reduces[staticNamespace] = () => {
+    if (Object.keys(reducers).length === 0) {
+      reducers[staticNamespace] = () => {
         return {};
       };
     }
   }
-  return reduces;
+  return reducers;
 }

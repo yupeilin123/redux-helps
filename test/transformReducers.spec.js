@@ -3,55 +3,55 @@ const redux = require('redux');
 const reduxHelps = require('../lib/redux-helps');
 
 const { createStore, combineReducers } = redux;
-const { transformReduces } = reduxHelps;
+const { transformReducers } = reduxHelps;
 
-describe('how to write \'transformReduces\'', () => {
+describe('how to write \'transformReducers\'', () => {
   it('correct \'state\'', done => {
-    const rootReduce = {
+    const rootReducer = {
       counter: {
         state: {
           count: 0
         }
       }
     };
-    const reduces = combineReducers({ ...transformReduces(rootReduce) });
-    const store = createStore(reduces);
+    const reducers = combineReducers({ ...transformReducers(rootReducer) });
+    const store = createStore(reducers);
     const { counter } = store.getState();
     assert.equal(counter.count, 0);
     done();
   });
   it('\'namespace\' exit', done => {
-    const rootReduce = {
+    const rootReducer = {
       todo: {
         namespace: 'Todo'
       }
     };
-    const reduces = combineReducers({ ...transformReduces(rootReduce) });
-    const store = createStore(reduces);
+    const reducers = combineReducers({ ...transformReducers(rootReducer) });
+    const store = createStore(reducers);
     const { Todo } = store.getState();
     assert.ok(Todo);
     done();
   });
   it('\'namespace\' not exit', done => {
-    const rootReduce = {
+    const rootReducer = {
       todo: {}
     };
-    const reduces = combineReducers({ ...transformReduces(rootReduce) });
-    const store = createStore(reduces);
+    const reducers = combineReducers({ ...transformReducers(rootReducer) });
+    const store = createStore(reducers);
     const { todo } = store.getState();
     assert.ok(todo);
     done();
   });
   it('default \'setState\'', done => {
-    const rootReduce = {
+    const rootReducer = {
       counter: {
         state: {
           count: 0
         }
       }
     };
-    const reduces = combineReducers({ ...transformReduces(rootReduce) });
-    const store = createStore(reduces);
+    const reducers = combineReducers({ ...transformReducers(rootReducer) });
+    const store = createStore(reducers);
     store.dispatch({
       type: 'setState', payload: {
         count: 1
@@ -62,7 +62,7 @@ describe('how to write \'transformReduces\'', () => {
     done();
   });
   it('new action \'multiply\'', done => {
-    const rootReduce = {
+    const rootReducer = {
       counter: {
         state: {
           count: 1,
@@ -73,8 +73,8 @@ describe('how to write \'transformReduces\'', () => {
         }
       }
     };
-    const reduces = combineReducers({ ...transformReduces(rootReduce) });
-    const store = createStore(reduces);
+    const reducers = combineReducers({ ...transformReducers(rootReducer) });
+    const store = createStore(reducers);
     store.dispatch({
       type: 'multiply',
       payload: {

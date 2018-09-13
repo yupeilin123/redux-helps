@@ -13,11 +13,11 @@ npm install redux-helps --save
 
 ### How to use
 
-Now provide the single file `transform` methods,`transformReduce` 和 `transformSaga`。You can view `examples` and `test` in detail.
+Now provide the single file `transform` methods,`transformReducer` 和 `transformSaga`。You can view `examples` and `test` in detail.
 
-**transformReduces**
+**transformReducers**
 
-The method `transformReduces` is used to convert `redux` 's `reducers` .
+The method `transformReducers` is used to convert `redux` 's `reducers` .
 
 First way: use the `require.context()` method of `webpack` .
 
@@ -38,10 +38,10 @@ export default {
 Default action `setState` ,
 ```javascript
 import { createStore, combineReducers } from 'redux';
-import { transformReduces } from 'redux-helps';
+import { transformReducers } from 'redux-helps';
 import rootReduce from './reduces';
 
-const reduces = combineReducers({ ...transformReduces(rootReduce) });
+const reduces = combineReducers({ ...transformReducers(rootReduce) });
 const store = createStore(reduces);
 store.dispatch({ type: 'setState', payload: { count: 1 } });
 const { counter } = store.getState();
@@ -85,7 +85,7 @@ You can also omit `namespace` , so there will be a default `namespace` whitch is
 
 The method `transformSagas` is used to convert the `sagas` of `redux-saga` .
 
-This is used the same as `transformReduces` . The principle is use `takeEvery` to capture every `sagas` defined.
+This is used the same as `transformReducers` . The principle is use `takeEvery` to capture every `sagas` defined.
 
 Here is an example of using the first way to method above:
 Create a new `counter.js` under `sagas` ,
@@ -108,12 +108,12 @@ export default {
 ```javascript
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { transformReduces, transformSagas } from 'redux-helps';
+import { transformReducers, transformSagas } from 'redux-helps';
 import rootReduce from './reduces';
 import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
-const reduces = combineReducers({...transformReduces(rootReduce)});
+const reduces = combineReducers({...transformReducers(rootReduce)});
 
 const store = createStore(reduces, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(transformSagas(rootSaga));

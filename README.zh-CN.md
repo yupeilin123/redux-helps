@@ -13,11 +13,11 @@ npm install redux-helps --save
 
 ### 如何使用
 
-现在提供单文件的 `transform` 方法，`transformReduce` 和 `transformSaga`。具体可以查看 `examples` 和 `test` 。
+现在提供单文件的 `transform` 方法，`transformReducer` 和 `transformSaga`。具体可以查看 `examples` 和 `test` 。
 
-**transformReduces**
+**transformReducers**
 
-方法 `transformReduces` 用来转化 `redux` 的 `reducers` 。
+方法 `transformReducers` 用来转化 `redux` 的 `reducers` 。
 
 第一种方式: 使用 `webpack` 的 `require.context()` 方法。
 
@@ -38,10 +38,10 @@ export default {
 默认 `setState` action，
 ```javascript
 import { createStore, combineReducers } from 'redux';
-import { transformReduces } from 'redux-helps';
+import { transformReducers } from 'redux-helps';
 import rootReduce from './reduces';
 
-const reduces = combineReducers({ ...transformReduces(rootReduce) });
+const reduces = combineReducers({ ...transformReducers(rootReduce) });
 const store = createStore(reduces);
 store.dispatch({ type: 'setState', payload: { count: 1 } });
 const { counter } = store.getState();
@@ -84,7 +84,7 @@ export default {
 **transformSagas**
 
 方法 `transformSagas` 用来转化 `redux-saga `的 `sagas`。
-使用的方式与 `transformReduces` 大致相同。原理是使用 `takeEvery` ，能捕获到定义的每个 `saga` 。
+使用的方式与 `transformReducers` 大致相同。原理是使用 `takeEvery` ，能捕获到定义的每个 `saga` 。
 在这里使用上文的第一种方式举例：
 在 `sagas` 下新建 `counter.js` ,
 
@@ -106,12 +106,12 @@ export default {
 ```javascript
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { transformReduces, transformSagas } from 'redux-helps';
+import { transformReducers, transformSagas } from 'redux-helps';
 import rootReduce from './reduces';
 import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
-const reduces = combineReducers({...transformReduces(rootReduce)});
+const reduces = combineReducers({...transformReducers(rootReduce)});
 
 const store = createStore(reduces, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(transformSagas(rootSaga));

@@ -17,14 +17,18 @@ class Counter extends React.PureComponent {
     })
   }
   incrementIfOdd = () => {
-    this.props.dispatch({ type:'incrementIfOdd',payload: {
-      count: this.props.count
-    }})
+    this.props.dispatch({
+      type: 'incrementIfOdd', payload: {
+        count: this.props.count
+      }
+    })
   }
   incrementAsync = () => {
-    this.props.dispatch({ type:'incrementAsync',payload: {
-      count: this.props.count
-    }})
+    this.props.dispatch({
+      type: 'incrementAsync', payload: {
+        count: this.props.count
+      }
+    })
   }
   render() {
     const { count } = this.props;

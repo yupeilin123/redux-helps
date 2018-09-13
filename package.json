@@ -1,12 +1,12 @@
 {
   "name": "redux-helps",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a redux and redux-saga helps",
   "main": "lib/redux-helps.js",
   "unpkg": "dist/redux-helps.js",
   "module": "res/redux-helps.js",
   "scripts": {
-    "test": "mocha test/transformSagas.spec.js",
+    "test": "mocha test",
     "build": "npm run clean && run-p build:**",
     "build:commonjs": "cross-env NODE_ENV=cjs rollup -c -o lib/redux-helps.js",
     "build:es": "cross-env BABEL_ENV=es NODE_ENV=es rollup -c -o es/redux-helps.js",
