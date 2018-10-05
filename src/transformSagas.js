@@ -1,8 +1,13 @@
 import { takeEvery } from 'redux-saga/effects';
 import checkNamespace from './utils/checkNamespace';
 
+/**
+ * 
+ * @param {object | array} rootSaga 
+ * @return {generator function}
+ */
 export default function transformSagas(rootSaga) {
-  const sagas = {};
+  let sagas = {};
   if (Array.isArray(rootSaga)) {
     const len = rootSaga.length;
     for (let i = 0; i < len; i += 1) {
@@ -13,12 +18,16 @@ export default function transformSagas(rootSaga) {
             throw new Error('namespace\'s type must be a \'String\'');
           }
           Object.keys(handles).forEach(fname => {
-            sagas[`${namespace}/${fname}`] = handles[fname];
+            if (typeof handles[fname] === 'function') {
+              sagas[`${namespace}/${fname}`] = handles[fname];
+            }
           });
         } else {
           const handles = rootSaga[i].default;
           Object.keys(handles).forEach(fname => {
-            sagas[fname] = handles[fname];
+            if (typeof handles[fname] === 'function') {
+              sagas[fname] = handles[fname];
+            }
           });
         }
       }
@@ -32,11 +41,15 @@ export default function transformSagas(rootSaga) {
           throw new Error('namespace\'s type must be a \'String\'');
         }
         Object.keys(handles).forEach(fname => {
-          sagas[`${namespace}/${fname}`] = handles[fname];
+          if (typeof handles[fname] === 'function') {
+            sagas[`${namespace}/${fname}`] = handles[fname];
+          }
         });
       } else {
         Object.keys(subSaga).forEach(fname => {
-          sagas[fname] = subSaga[fname];
+          if (typeof subSaga[fname] === 'function') {
+            sagas[fname] = subSaga[fname];
+          }
         });
       }
     });

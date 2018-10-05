@@ -1,5 +1,10 @@
 import checkState from './utils/checkState';
 
+/**
+ * 
+ * @param {object} rootReducer 
+ * @return {function}
+ */
 export default function transformReducer(rootReducer) {
   const { state, ...handles } = rootReducer;
   let plainState = state;
@@ -10,7 +15,7 @@ export default function transformReducer(rootReducer) {
     if (action.type === 'setState') {
       return { ...defaultState, ...action.payload };
     }
-    if (handles[action.type] && typeof handles[action.type] === 'function') {
+    if (typeof handles[action.type] === 'function') {
       return handles[action.type](defaultState, { payload: action.payload });
     }
     return defaultState;

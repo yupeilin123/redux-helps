@@ -2,7 +2,7 @@
 
 # redux-helps
 
-`redux-helps` 是一个工具方法集，在使用 `redux` 的情况下，可以简化 `redux` 的 `reducers` 聚合，或者在使用 `redux-saga` 的情况下，可以简化 `redux-saga` 的 `sagas` 的聚合。
+`redux-helps` 是一个工具方法集，在使用 `redux` 的情况下，可以简化 `redux` 的 `reducers` 聚合，或者在使用 `redux-saga` 的情况下，可以简化 `redux-saga` 的 `sagas` 的聚合。并且 `reducers` 和 `sagas` 可以联合使用。
 
 ## 开始
 
