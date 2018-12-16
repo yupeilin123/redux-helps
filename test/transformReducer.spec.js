@@ -9,48 +9,32 @@ describe('how to write \'transformReducer\'', () => {
   it('correct \'state\'', done => {
     const rootReducer = {
       state: {
-        count: 1
+        count: 1024
       }
     };
     const store = createStore(transformReducer(rootReducer));
     const { count } = store.getState();
-    assert.equal(count, 1);
+    assert.equal(count, 1024);
     done();
   });
-  it('default \'setState\'', done => {
+  it('new action \'setState\'', done => {
     const rootReducer = {
       state: {
-        count: 1
-      }
-    };
-    const store = createStore(transformReducer(rootReducer));
-    store.dispatch({
-      type: 'setState', payload: {
-        count: 10
-      }
-    });
-    const { count } = store.getState();
-    assert.equal(count, 10);
-    done();
-  });
-  it('new action \'multiply\'', done => {
-    const rootReducer = {
-      state: {
-        count: 1
+        count: 1024
       },
-      multiply: (state, { payload }) => {
-        state.count *= payload.times;
+      setState: (state, { payload }) => {
+        state.count = payload.count;
         return { ...state };
       }
     };
     const store = createStore(transformReducer(rootReducer));
     store.dispatch({
-      type: 'multiply', payload: {
-        times: 10
+      type: 'setState', payload: {
+        count: 0
       }
     });
     const { count } = store.getState();
-    assert.equal(count, 10);
+    assert.equal(count, 0);
     done();
   })
 });

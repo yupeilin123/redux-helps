@@ -6,7 +6,7 @@ import checkNamespace from './utils/checkNamespace';
  * @param {object | array} rootSaga 
  * @return {generator function}
  */
-export default function transformSagas(rootSaga) {
+export default function transformEffects(rootSaga) {
   let sagas = {};
   if (Array.isArray(rootSaga)) {
     const len = rootSaga.length;

@@ -6,7 +6,7 @@ import checkNamespace from './utils/checkNamespace';
  * @param {object} rootSaga 
  * @return {generator function}
  */
-export default function transformSaga(rootSaga) {
+export default function transformEffect(rootSaga) {
   let sagas = {};
   if (Object.prototype.hasOwnProperty.call(rootSaga, 'namespace')) {
     const { namespace, ...handles } = rootSaga;

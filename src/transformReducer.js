@@ -12,9 +12,6 @@ export default function transformReducer(rootReducer) {
     plainState = {};
   }
   const reducer = (defaultState = { ...plainState }, action) => {
-    if (action.type === 'setState') {
-      return { ...defaultState, ...action.payload };
-    }
     if (typeof handles[action.type] === 'function') {
       return handles[action.type](defaultState, { payload: action.payload });
     }

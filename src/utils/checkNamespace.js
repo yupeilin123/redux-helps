@@ -1,3 +1,3 @@
-export default function checkNamespace(namespace) {
-  return typeof namespace === 'string';
+export default function checkNamespace(params) {
+  return typeof params === 'string' && params.trim().length !== 0;
 }

@@ -15,55 +15,35 @@ describe('how to write \'transformReducers\'', () => {
         }
       }
     };
-    const reducers = combineReducers({ ...transformReducers(rootReducer) });
+    const reducers = combineReducers(transformReducers(rootReducer));
     const store = createStore(reducers);
     const { counter } = store.getState();
     assert.equal(counter.count, 1);
     done();
   });
-  it('default \'setState\'', done => {
+  it('new action \'stateState\'', done => {
     const rootReducer = {
       counter: {
         namespace: 'counter',
         state: {
-          count: 1
-        }
-      }
-    };
-    const reducers = combineReducers({ ...transformReducers(rootReducer) });
-    const store = createStore(reducers);
-    store.dispatch({
-      type: 'setState', payload: {
-        count: 10
-      }
-    });
-    const { counter } = store.getState();
-    assert.equal(counter.count, 10);
-    done();
-  });
-  it('new action \'multiply\'', done => {
-    const rootReducer = {
-      counter: {
-        namespace: 'counter',
-        state: {
-          count: 1,
+          count: 1024,
         },
-        multiply: (state, { payload }) => {
-          state.count *= payload.times;
+        setState: (state, { payload }) => {
+          state.count = payload.count;
           return { ...state };
         }
       }
     };
-    const reducers = combineReducers({ ...transformReducers(rootReducer) });
+    const reducers = combineReducers(transformReducers(rootReducer));
     const store = createStore(reducers);
     store.dispatch({
-      type: 'multiply',
+      type: 'counter/setState',
       payload: {
-        times: 10,
+        count: 0,
       }
     });
     const { counter } = store.getState();
-    assert.equal(counter.count, 10);
+    assert.equal(counter.count, 0);
     done();
   });
 });
