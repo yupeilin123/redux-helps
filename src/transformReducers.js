@@ -1,5 +1,6 @@
 import checkNamespace from './utils/checkNamespace';
 import checkState from './utils/checkState';
+import generateHandles from './utils/generateHandles';
 const randomString = () => Math.random().toString(36).substring(7).split('').join('.');
 
 const staticNamespace = `redux-helps@1.0.0-${randomString()}`;
@@ -23,7 +24,7 @@ export default function transformReducers(rootReducer) {
         if (plainState && !checkState(plainState)) {
           plainState = {};
         }
-        const finalHandles = generateFinalHandle(handles, namespace);
+        const finalHandles = generateHandles(handles, namespace);
         reducers[namespace] = (defaultState = { ...plainState }, action) => {
           if (typeof finalHandles[action.type] === 'function') {
             return finalHandles[action.type](defaultState, { payload: action.payload });
@@ -42,7 +43,7 @@ export default function transformReducers(rootReducer) {
       if (plainState && !checkState(plainState)) {
         plainState = {};
       }
-      const finalHandles = generateFinalHandle(handles, namespace);
+      const finalHandles = generateHandles(handles, namespace);
       reducers[namespace] = (defaultState = { ...plainState }, action) => {
         if (typeof finalHandles[action.type] === 'function') {
           return finalHandles[action.type](defaultState, { payload: action.payload });
@@ -57,18 +58,4 @@ export default function transformReducers(rootReducer) {
     };
   }
   return reducers;
-}
-/**
- * 
- * @param {Object} handles 
- * @param {String} namespace 
- * @return {Object}
- */
-function generateFinalHandle(handles, namespace) {
-  const finalHandles = {};
-  for (const key in handles) {
-    const actionName = namespace + '/' + key;
-    finalHandles[actionName] = handles[key];
-  }
-  return finalHandles;
 }

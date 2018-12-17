@@ -3,7 +3,6 @@ import transformReducers from './transformReducers';
 import transformEffect from './transformEffect';
 import transformEffects from './transformEffects';
 import transformModal from './transformModal';
-import transformModals from './transformModals';
 
 export default {
   transformReducer,
@@ -11,5 +10,4 @@ export default {
   transformEffect,
   transformEffects,
   transformModal,
-  transformModals
 };
