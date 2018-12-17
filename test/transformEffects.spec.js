@@ -5,11 +5,11 @@ const { put } = require('redux-saga').effects;
 const reduxHelps = require('../lib/redux-helps');
 
 const { createStore, applyMiddleware } = redux;
-const { transformSagas } = reduxHelps;
+const { transformEffects } = reduxHelps;
 
-describe('how to write \'transformSaga\'', () => {
+describe('how to write \'transformEffects\'', () => {
   it('corrent \'saga\'', done => {
-    const rootReduce = (state = { count: 1 }, action) => {
+    const rootReduce = (state = { count: 1024 }, action) => {
       switch (action.type) {
         case 'setState':
           return { ...state, ...action.payload }
@@ -19,6 +19,7 @@ describe('how to write \'transformSaga\'', () => {
     };
     const rootSaga = {
       count: {
+        namespace: 'counter',
         *asyncOperation({ payload }) {
           yield put({
             type: 'setState',
@@ -31,40 +32,10 @@ describe('how to write \'transformSaga\'', () => {
     };
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(rootReduce, applyMiddleware(sagaMiddleware));
-    sagaMiddleware.run(transformSagas(rootSaga));
-    store.dispatch({ type: 'asyncOperation', payload: { count: 10 } });
+    sagaMiddleware.run(transformEffects(rootSaga));
+    store.dispatch({ type: 'counter/asyncOperation', payload: { count: 10 } });
     const { count } = store.getState();
     assert.equal(count, 10);
     done();
   });
-  it('with namespace\'s \'saga\'', done => {
-    const rootReduce = (state = { count: 1 }, action) => {
-      switch (action.type) {
-        case 'setState':
-          return { ...state, ...action.payload }
-        default:
-          return state;
-      }
-    };
-    const rootSaga = {
-      count: {
-        namespace: 'count',
-        *asyncOperation({ payload }) {
-          yield put({
-            type: 'setState',
-            payload: {
-              count: payload.count
-            }
-          })
-        }
-      }
-    };
-    const sagaMiddleware = createSagaMiddleware();
-    const store = createStore(rootReduce, applyMiddleware(sagaMiddleware));
-    sagaMiddleware.run(transformSagas(rootSaga));
-    store.dispatch({ type: 'count/asyncOperation', payload: { count: 10 } });
-    const { count } = store.getState();
-    assert.equal(count, 10);
-    done();
-  })
 });

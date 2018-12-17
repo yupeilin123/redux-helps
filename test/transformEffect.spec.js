@@ -5,11 +5,11 @@ const { put } = require('redux-saga').effects;
 const reduxHelps = require('../lib/redux-helps');
 
 const { createStore, applyMiddleware } = redux;
-const { transformSaga } = reduxHelps;
+const { transformEffect } = reduxHelps;
 
-describe('how to write \'transformSaga\'', () => {
+describe('how to write \'transformEffect\'', () => {
   it('correct \'saga\'', done => {
-    const rootReduce = (state = { count: 1 }, action) => {
+    const rootReduce = (state = { count: 1024 }, action) => {
       switch (action.type) {
         case 'setState':
           return { ...state, ...action.payload }
@@ -29,38 +29,10 @@ describe('how to write \'transformSaga\'', () => {
     };
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(rootReduce, applyMiddleware(sagaMiddleware));
-    sagaMiddleware.run(transformSaga(rootSaga));
-    store.dispatch({ type: 'asyncOperation', payload: { count: 10 } });
+    sagaMiddleware.run(transformEffect(rootSaga));
+    store.dispatch({ type: 'asyncOperation', payload: { count: 0 } });
     const { count } = store.getState();
-    assert.equal(count, 10);
+    assert.equal(count, 0);
     done();
   });
-  it('with namespace\'s \'saga\'', done => {
-    const rootReduce = (state = { count: 1 }, action) => {
-      switch (action.type) {
-        case 'setState':
-          return { ...state, ...action.payload }
-        default:
-          return state;
-      }
-    };
-    const rootSaga = {
-      namespace: 'counter',
-      *asyncOperation({ payload }) {
-        yield put({
-          type: 'setState',
-          payload: {
-            count: payload.count
-          }
-        })
-      }
-    };
-    const sagaMiddleware = createSagaMiddleware();
-    const store = createStore(rootReduce, applyMiddleware(sagaMiddleware));
-    sagaMiddleware.run(transformSaga(rootSaga));
-    store.dispatch({ type: 'counter/asyncOperation', payload: { count: 10 } });
-    const { count } = store.getState();
-    assert.equal(count, 10);
-    done();
-  })
 });

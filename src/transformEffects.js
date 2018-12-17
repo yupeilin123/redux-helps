@@ -15,7 +15,7 @@ export default function transformEffects(rootSaga) {
         if (Object.prototype.hasOwnProperty.call(rootSaga[i].default, 'namespace')) {
           const { namespace, ...handles } = rootSaga[i].default;
           if (!checkNamespace(namespace)) {
-            throw new Error('namespace\'s type must be a \'String\'');
+            throw new Error('namespace must be \'String\' and it\'s not null');
           }
           Object.keys(handles).forEach(fname => {
             if (typeof handles[fname] === 'function') {
@@ -23,12 +23,7 @@ export default function transformEffects(rootSaga) {
             }
           });
         } else {
-          const handles = rootSaga[i].default;
-          Object.keys(handles).forEach(fname => {
-            if (typeof handles[fname] === 'function') {
-              sagas[fname] = handles[fname];
-            }
-          });
+          throw new Error('namespace muse be \'String\' ');
         }
       }
     }
@@ -38,7 +33,7 @@ export default function transformEffects(rootSaga) {
       if (Object.prototype.hasOwnProperty.call(subSaga, 'namespace')) {
         const { namespace, ...handles } = subSaga;
         if (!checkNamespace(namespace)) {
-          throw new Error('namespace\'s type must be a \'String\'');
+          throw new Error('namespace must be \'String\' and it\'s not null');
         }
         Object.keys(handles).forEach(fname => {
           if (typeof handles[fname] === 'function') {
@@ -46,11 +41,7 @@ export default function transformEffects(rootSaga) {
           }
         });
       } else {
-        Object.keys(subSaga).forEach(fname => {
-          if (typeof subSaga[fname] === 'function') {
-            sagas[fname] = subSaga[fname];
-          }
-        });
+        throw new Error('namespace muse be \'String\' ');
       }
     });
   }
