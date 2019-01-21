@@ -1,7 +1,7 @@
 const assert = require('assert');
 const redux = require('redux');
 const createSagaMiddleware = require('redux-saga').default;
-const { put } = require('redux-saga').effects;
+const { put } = require('redux-saga/effects');
 const reduxHelps = require('../lib/redux-helps');
 
 const { createStore, applyMiddleware, combineReducers } = redux;
