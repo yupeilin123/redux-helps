@@ -4,34 +4,34 @@ import { connect } from 'react-redux';
 class Counter extends React.PureComponent {
   onIncrement = () => {
     this.props.dispatch({
-      type: 'setState', payload: {
-        count: this.props.count + 1
+      type: 'counter/setState', payload: {
+        count: this.props.counter.count + 1
       }
     })
   }
   onDecrement = () => {
     this.props.dispatch({
-      type: 'setState', payload: {
-        count: this.props.count - 1
+      type: 'counter/setState', payload: {
+        count: this.props.counter.count - 1
       }
     })
   }
   incrementIfOdd = () => {
     this.props.dispatch({
-      type: 'incrementIfOdd', payload: {
-        count: this.props.count
+      type: 'counter/incrementIfOdd', payload: {
+        count: this.props.counter.count
       }
     })
   }
   incrementAsync = () => {
     this.props.dispatch({
-      type: 'incrementAsync', payload: {
-        count: this.props.count
+      type: 'counter/incrementAsync', payload: {
+        count: this.props.counter.count
       }
     })
   }
   render() {
-    const { count } = this.props;
+    const { count } = this.props.counter;
     return (
       <p>
         Clicked: {count} times

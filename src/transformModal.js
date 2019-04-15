@@ -12,7 +12,7 @@ const staticNamespace = `reduxHelps@1.0.3-${randomString()}`;
  * @return {object<reducers>}
  * @return {generator function<sagas>}
  */
-export default function transformModals(rootModal) {
+export default function transformModal(rootModal) {
   const reducers = {};
   const middleEffects = {};
   if (Array.isArray(rootModal)) {
@@ -29,7 +29,7 @@ export default function transformModals(rootModal) {
         }
         const finalHandles = generateHandles(modalReducers, namespace);
         reducers[namespace] = (defaultState = { ...plainState }, action) => {
-          if (finalHandles[action.type] === 'function') {
+          if (typeof finalHandles[action.type] === 'function') {
             return finalHandles[action.type](defaultState, { payload: action.payload });
           }
           return defaultState;

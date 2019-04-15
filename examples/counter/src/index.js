@@ -1,19 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import Counter from './Components/Counter.js';
-import rootReducers from './Reducers';
-import rootEffects from './Effects';
-import { transformReducer, transformEffect } from 'redux-helps'
+import { transformModal } from 'redux-helps'
+import models from './Models';
 import './index.css';
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+const { reducers, effects } = transformModal(models)
+
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(transformReducer(rootReducers), applyMiddleware(sagaMiddleware));
-sagaMiddleware.run(transformEffect(rootEffects))
+// const store = createStore(transformReducer(rootReducers), applyMiddleware(sagaMiddleware));
+// sagaMiddleware.run(transformEffect(rootEffects))
+
+const store = createStore(combineReducers({ ...reducers }), applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(effects)
+
 
 function App() {
   return (
