@@ -19,7 +19,7 @@ export default function transformModals(rootModal) {
     const len = rootModal.length;
     for (let i = 0; i < len; i += 1) {
       if (rootModal[i].default) {
-        const { namespace, state, reducers: modalReducers, sagas: modalEffects } = rootModal[i].default;
+        const { namespace, state, reducers: modalReducers, effects: modalEffects } = rootModal[i].default;
         if (!checkNamespace(namespace)) {
           throw new Error('namespace\'s type must be a \'String\'');
         }
