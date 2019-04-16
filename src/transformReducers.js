@@ -3,7 +3,7 @@ import checkState from './utils/checkState';
 import generateHandles from './utils/generateHandles';
 const randomString = () => Math.random().toString(36).substring(7).split('').join('.');
 
-const staticNamespace = `redux-helps@1.0.3-${randomString()}`;
+const staticNamespace = `redux-helps@1.0.4-${randomString()}`;
 
 /**
  * 

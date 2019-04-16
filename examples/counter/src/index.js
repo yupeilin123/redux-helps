@@ -7,14 +7,11 @@ import Counter from './Components/Counter.js';
 import { transformModal } from 'redux-helps'
 import models from './Models';
 import './index.css';
-// import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const { reducers, effects } = transformModal(models)
 
 const sagaMiddleware = createSagaMiddleware();
-// const store = createStore(transformReducer(rootReducers), applyMiddleware(sagaMiddleware));
-// sagaMiddleware.run(transformEffect(rootEffects))
 
 const store = createStore(combineReducers({ ...reducers }), applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(effects)
