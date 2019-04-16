@@ -3,6 +3,7 @@ import transformReducers from './transformReducers';
 import transformEffect from './transformEffect';
 import transformEffects from './transformEffects';
 import transformModal from './transformModal';
+import promiseMiddleware from './utils/promiseMiddleware';
 
 export default {
   transformReducer,
@@ -10,4 +11,5 @@ export default {
   transformEffect,
   transformEffects,
   transformModal,
+  promiseMiddleware
 };

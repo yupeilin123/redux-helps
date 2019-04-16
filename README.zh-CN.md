@@ -33,6 +33,37 @@ export default context.keys().filter(item => item !== './index.js').map(key => c
 
 第二种方式：使用 `import` 和 `export defalut`。
 
+
+### 新特性
+
+现在如果你使用方法 `transformModal` ，你可以使用 `dispatch().then()`, 如果 `type` 是 `effects`， 可以返回一个 `promise`
+
+```javascript
+const rootModal = {
+  counter: {
+    namespace: 'counter',
+    state: {
+      count: 1
+    },
+    reducers: {},
+    effects: {
+      *asyncResolve({ payload, resolve }) {
+        yield delay(500)
+        resolve(payload)
+      }
+    }
+  }
+}
+const { reducers, effects } = transformModal(rootModal);
+const sagaMiddleware = createSagaMiddleware();
+// need promiseMiddleware(effects)
+const store = createStore(combineReducers(reducers), applyMiddleware(promiseMiddleware(effects), sagaMiddleware));
+sagaMiddleware.run(effects);
+store.dispatch({ type: 'counter/asyncResolve', payload: 10000 }).then(res => {
+  consolg.log(res)
+})
+```
+
 ## 参与贡献
 
 非常欢迎你的贡献，你可以通过以下方式和我们一起共建：

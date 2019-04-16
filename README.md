@@ -32,6 +32,36 @@ export default context.keys().filter(item => item !== './index.js').map(key => c
 
 Second way: use `import` and `export defalut`.
 
+### New features
+
+now if you use method `transformModal` , you can use `dispatch().then()` because if type is `effects` , it returns a `Promise`
+
+```javascript
+const rootModal = {
+  counter: {
+    namespace: 'counter',
+    state: {
+      count: 1
+    },
+    reducers: {},
+    effects: {
+      *asyncResolve({ payload, resolve }) {
+        yield delay(500)
+        resolve(payload)
+      }
+    }
+  }
+}
+const { reducers, effects } = transformModal(rootModal);
+const sagaMiddleware = createSagaMiddleware();
+// need promiseMiddleware(effects)
+const store = createStore(combineReducers(reducers), applyMiddleware(promiseMiddleware(effects), sagaMiddleware));
+sagaMiddleware.run(effects);
+store.dispatch({ type: 'counter/asyncResolve', payload: 10000 }).then(res => {
+  consolg.log(res)
+})
+```
+
 ## Contributing
 
 Any type of contribution is welcome, here are some examples of how you may contribute to this project:

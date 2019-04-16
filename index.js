@@ -1,1 +1,0 @@
-console.log('redux-helps welcome you');

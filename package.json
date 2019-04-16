@@ -1,6 +1,6 @@
 {
   "name": "redux-helps",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "a redux and redux-saga helps",
   "main": "lib/redux-helps.js",
   "unpkg": "dist/redux-helps.js",
