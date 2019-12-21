@@ -1,53 +1,31 @@
-English | [简体中文](./README.zh-CN.md)
-
 # redux-helps
 
-`redux-helps` is a set of methods. In the case of `redux` , can simplify the `reducers` aggregation of `redux` , or in case of `redux-saga` , it can also simplify the  aggregation of `redux-saga` 's `effects` .
+`redux-helps` 是一个工具方法集，在使用 `redux` 的情况下，可以简化 `redux` 的 `reducers` 聚合，或者在使用 `redux-saga` 的情况下，可以简化 `redux-saga` 的 `effects` 的聚合。并且 `reducers` 和 `effects` 可以联合使用。
 
-## Getting started
+## 开始
 
-### Install
+### 安装
+
 ```
 npm install redux-helps --save
 ```
 
-### How to use
+### 如何使用
 
-Provide `reducer` conversion methods, `transformReducer` and `transformReducers`.
+使用 `transformModal`，得到一个 `reducer` 和 `effect` 。
 
-Provide conversion methods for `effect`, `transformEffect` and `transformEffects`.
+### 新特性
 
-Even the conversion method `transformModal` used in conjunction with `reducers` and `effects` is provided.
-
-For specific use, you can view the folders `test` and `example`.
-
-#### how to introduce quickly
-
-First way: use the `require.context()` method of `webpack`.
-
-```javascript
-const context = require.context('./', false, /\.js$/);
-export default context.keys().filter(item => item !== './index.js').map(key => context(key));
-```
-
-Second way: use `import` and `export defalut`.
-
-### New features
-
-now if you use method `transformModal` , you can use `dispatch().then()` because if type is `effects` , it returns a `Promise`
+使用了 `promiseMiddleware` 中间件，在 `action` 是 `effects` 时，就可以使用 `dispatch().then()`。
 
 ```javascript
 const rootModal = {
   counter: {
     namespace: 'counter',
-    state: {
-      count: 1
-    },
-    reducers: {},
     effects: {
-      *asyncResolve({ payload, resolve }) {
+      *asyncResolve({ payload }) {
         yield delay(500)
-        resolve(payload)
+        return payload
       }
     }
   }
@@ -58,13 +36,13 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(combineReducers(reducers), applyMiddleware(promiseMiddleware(effects), sagaMiddleware));
 sagaMiddleware.run(effects);
 store.dispatch({ type: 'counter/asyncResolve', payload: 10000 }).then(res => {
-  consolg.log(res)
+  consolg.log(res) // 10000
 })
 ```
 
-## Contributing
+## 参与贡献
 
-Any type of contribution is welcome, here are some examples of how you may contribute to this project:
+非常欢迎你的贡献，你可以通过以下方式和我们一起共建：
 
-- Submit issues to report bugs or ask questions.
-- Propose pull requests to improve our code。
+- 通过 Issue bug 或进行咨询。
+- 提交 Pull Request 改进代码。

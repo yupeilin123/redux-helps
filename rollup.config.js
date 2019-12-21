@@ -28,6 +28,7 @@ if (env === 'development' || env === 'production') {
       '@babel/runtime/helpers/objectSpread': '_objectSpread',
       '@babel/runtime/helpers/objectWithoutProperties': '_objectWithoutProperties',
       '@babel/runtime/regenerator': '_regeneratorRuntime',
+      '@babel/runtime/helpers/defineProperty': '__defineProperty',
       'redux-saga/effects': 'effects'
     }
   };

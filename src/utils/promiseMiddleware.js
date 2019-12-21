@@ -5,9 +5,9 @@ export default function (effects) {
       if (isEffect(middleEffects, action.type)) {
         // eslint-disable-next-line no-undef
         return new Promise((resolve, reject) => {
-          return next({
-            resolve: resolve,
-            reject: reject,
+          next({
+            _resolve: resolve,
+            _reject: reject,
             ...action
           });
         });

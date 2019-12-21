@@ -30,9 +30,6 @@ describe('how to write \'transformModal\'', () => {
               }
             })
           },
-          *asyncResolve({ payload, resolve }) {
-            resolve(payload)
-          }
         }
       }
     }
@@ -46,18 +43,14 @@ describe('how to write \'transformModal\'', () => {
     assert.equal(store.getState().counter.count, 10000)
     done();
   });
-  it('correct user \'resolve\'', done => {
+  it('correct use dispatch promiseify', done => {
     const rootModal = {
       counter: {
         namespace: 'counter',
-        state: {
-          count: 1
-        },
-        reducers: {},
         effects: {
-          *asyncResolve({ payload, resolve }) {
+          *asyncResolve({ payload }) {
             yield delay(500)
-            resolve(payload)
+            return payload
           }
         }
       }
